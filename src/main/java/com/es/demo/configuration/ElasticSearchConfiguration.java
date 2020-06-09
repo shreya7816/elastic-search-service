@@ -19,6 +19,9 @@ public class ElasticSearchConfiguration {
     @Value("${elasticsearch.host}")
     private String elasticsearchHost;
 
+    @Value("${elasticsearch.port}")
+    private String elasticsearchPort;
+
     RestHighLevelClient client;
 
     @Bean
@@ -27,7 +30,7 @@ public class ElasticSearchConfiguration {
         RestClientBuilder builder
                 = RestClient.builder(new HttpHost(elasticsearchHost));*/
 
-        RestClientBuilder builder = RestClient.builder(new HttpHost("localhost", Integer.parseInt("9200")));
+        RestClientBuilder builder = RestClient.builder(new HttpHost(elasticsearchHost, Integer.parseInt(elasticsearchPort)));
         client = new RestHighLevelClient(builder);
         return client;
 

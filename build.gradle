@@ -19,8 +19,6 @@ jar {
     version = '0.0.1-SNAPSHOT'
 }
 
-//sourceCompatibility = 1.9
-
 repositories {
     mavenCentral()
 }
@@ -38,7 +36,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.7' //version required
+    gradleVersion = '4.7'
 }
 
 bootRun {
