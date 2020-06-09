@@ -1,7 +1,6 @@
 package com.es.demo.model;
 
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,4 +13,5 @@ public class Member {
     private String lastName;
     private String membershipType;
     private List<Amenity> amenities;
+
 }

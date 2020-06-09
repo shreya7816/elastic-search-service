@@ -23,7 +23,8 @@ public class ElasticSearchConfiguration {
 
     @Bean
     public RestHighLevelClient client() {
-/*        RestClientBuilder builder
+/*      use in case where ES is hosted on aws or docker
+        RestClientBuilder builder
                 = RestClient.builder(new HttpHost(elasticsearchHost));*/
 
         RestClientBuilder builder = RestClient.builder(new HttpHost("localhost", Integer.parseInt("9200")));
@@ -37,9 +38,7 @@ public class ElasticSearchConfiguration {
         try {
             client.close();
         } catch (Exception e) {
-/*
-            log.info("Error while closing Elastic Search Client.");
-*/
+            e.printStackTrace();
         }
     }
 
