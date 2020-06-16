@@ -35,7 +35,6 @@ public class ElasticSearchController {
         try {
             Member member = memberManager.findById(id);
             return new ResponseEntity<>(member, HttpStatus.OK);
-
         } catch (Exception e) {
             return new ResponseEntity<>("Search Failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -46,7 +45,6 @@ public class ElasticSearchController {
         try {
             List<Member> member = memberManager.findByAmenityId(id);
             return new ResponseEntity<>(member, HttpStatus.OK);
-
         } catch (Exception e) {
             return new ResponseEntity<>("Search Failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }

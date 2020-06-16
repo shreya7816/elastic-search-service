@@ -4,6 +4,8 @@ public class ElasticSearchConstants {
 
     public static final String INDEX_NAME = "members";
     public static final String OP_TYPE = "create";
+    public static final String AMENITIES = "amenities";
+    public static final String AMENITY_ID ="amenities.id";
     public static final String MAPPING = "{\n" +
             "\t\"properties\": {\n" +
             "\t\t\"id\": {\n" +

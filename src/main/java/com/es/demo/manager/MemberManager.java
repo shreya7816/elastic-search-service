@@ -3,6 +3,7 @@ package com.es.demo.manager;
 import com.es.demo.constants.ElasticSearchConstants;
 import com.es.demo.model.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -19,6 +20,7 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -103,7 +105,10 @@ public class MemberManager {
     public List<Member> findByAmenityId(UUID amenityId) throws IOException {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.termQuery("amenities.id.keyword", amenityId.toString()));
+        BoolQueryBuilder builder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.nestedQuery(ElasticSearchConstants.AMENITIES, QueryBuilders.boolQuery()
+                        .should(QueryBuilders.termQuery(ElasticSearchConstants.AMENITY_ID, amenityId.toString())), ScoreMode.None));
+        searchSourceBuilder.query(builder);
         searchRequest.indices(ElasticSearchConstants.INDEX_NAME);
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
