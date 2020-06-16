@@ -15,6 +15,9 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -34,7 +37,23 @@ public class MemberManager {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public String createMemberDocument(Member member) throws Exception {
+    public String create(Member member) throws Exception {
+        GetIndexRequest request = new GetIndexRequest(ElasticSearchConstants.INDEX_NAME);
+        boolean exists = client.indices().exists(request, RequestOptions.DEFAULT);
+        if(!exists){
+            createMapping();
+        }
+        return createDocument(member);
+    }
+
+    public boolean createMapping() throws IOException {
+        CreateIndexRequest request = new CreateIndexRequest(ElasticSearchConstants.INDEX_NAME);
+        request.mapping(ElasticSearchConstants.MAPPING, XContentType.JSON);
+        CreateIndexResponse createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
+        return createIndexResponse.isAcknowledged();
+    }
+
+    public String createDocument(Member member) throws Exception {
         String str = objectMapper.writeValueAsString(member);
         IndexRequest indexRequest = new IndexRequest(ElasticSearchConstants.INDEX_NAME);
         indexRequest.id(member.getId().toString());

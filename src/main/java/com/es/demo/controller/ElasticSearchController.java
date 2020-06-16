@@ -23,7 +23,7 @@ public class ElasticSearchController {
     )
     public ResponseEntity<?> createDocument (@RequestBody Member member){
         try {
-            String response = memberManager.createMemberDocument(member);
+            String response = memberManager.create(member);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
