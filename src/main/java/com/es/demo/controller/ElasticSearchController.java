@@ -63,8 +63,8 @@ public class ElasticSearchController {
     }
 
     @PutMapping("updateDocument")
-    public ResponseEntity<?> updateProfile(@RequestBody Member member) throws Exception {
-        return new ResponseEntity(memberManager.updateProfile(member), HttpStatus.CREATED);
+    public ResponseEntity<?> updateDocument(@RequestBody Member member) throws Exception {
+        return new ResponseEntity(memberManager.updateDocument(member), HttpStatus.CREATED);
     }
 
 

@@ -115,7 +115,7 @@ public class MemberManager {
         return getSearchResult(response);
     }
 
-    public String updateProfile(Member document) throws Exception {
+    public String updateDocument(Member document) throws Exception {
         Member resultDocument = findById(document.getId());
         UpdateRequest updateRequest = new UpdateRequest(ElasticSearchConstants.INDEX_NAME, document.getId().toString());
         Map<String, Object> documentMapper = objectMapper.convertValue(document, Map.class);
