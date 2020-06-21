@@ -79,10 +79,10 @@ public class MemberManager {
         searchRequest.source(searchSourceBuilder);
         searchRequest.indices(ElasticSearchConstants.INDEX_NAME);
         SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-        return getSearchResult(searchResponse);
+        return processResponse(searchResponse);
     }
 
-    public List<Member> getSearchResult(SearchResponse response) {
+    public List<Member> processResponse(SearchResponse response) {
         SearchHit[] searchHit = response.getHits().getHits();
         List<Member> memberDocuments = new ArrayList<>();
         if (searchHit.length > 0) {
@@ -112,7 +112,7 @@ public class MemberManager {
         searchRequest.indices(ElasticSearchConstants.INDEX_NAME);
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
-        return getSearchResult(response);
+        return processResponse(response);
     }
 
     public String updateDocument(Member document) throws Exception {
